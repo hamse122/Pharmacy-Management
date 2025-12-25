@@ -28,5 +28,12 @@ urlpatterns = [
     path('pharmacy/', include('pharmacy.urls')),
 ]
 
+# Serve media files in development
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+# In production, PythonAnywhere will serve static/media files via Web tab configuration
+# Make sure to configure:
+# - URL: /static/ → Directory: /home/xamse/Pharmacy-Management/staticfiles
+# - URL: /media/ → Directory: /home/xamse/Pharmacy-Management/media
