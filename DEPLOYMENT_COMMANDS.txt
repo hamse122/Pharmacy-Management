@@ -1,0 +1,74 @@
+# Copy and paste these commands one by one into your PythonAnywhere Bash console
+
+# ============================================
+# STEP 1: Clone Repository
+# ============================================
+cd ~
+git clone https://github.com/hamse122/Pharmacy-Management.git pms
+cd pms
+
+# ============================================
+# STEP 2: Create Virtual Environment
+# ============================================
+python3.10 -m venv venv
+source venv/bin/activate
+
+# ============================================
+# STEP 3: Install Dependencies
+# ============================================
+pip install --user -r requirements.txt
+
+# ============================================
+# STEP 4: Generate Secret Key
+# ============================================
+python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+
+# Copy the output above and use it in Step 5
+
+# ============================================
+# STEP 5: Create .env File
+# ============================================
+# Go to Files tab, navigate to /home/xamse/pms/
+# Create new file named: .env
+# Add this content (replace YOUR_SECRET_KEY with the key from Step 4):
+# SECRET_KEY=YOUR_SECRET_KEY
+# DEBUG=False
+# ALLOWED_HOSTS=xamse.pythonanywhere.com
+
+# ============================================
+# STEP 6: Run Migrations
+# ============================================
+cd ~/pms
+source venv/bin/activate
+python manage.py migrate
+
+# ============================================
+# STEP 7: Create Superuser
+# ============================================
+python manage.py createsuperuser
+# Follow the prompts to create admin user
+
+# ============================================
+# STEP 8: Collect Static Files
+# ============================================
+python manage.py collectstatic --noinput
+
+# ============================================
+# STEP 9: Configure Web App
+# ============================================
+# Go to Web tab:
+# 1. Click "Add a new web app"
+# 2. Choose "Manual configuration" → Python 3.10
+# 3. Click through setup
+# 4. Click on WSGI configuration file link
+# 5. Replace content with wsgi_config_for_pythonanywhere.py content
+# 6. Add static files mapping:
+#    - URL: /static/ → Directory: /home/xamse/pms/staticfiles
+#    - URL: /media/ → Directory: /home/xamse/pms/media
+# 7. Click green "Reload" button
+
+# ============================================
+# DONE! Your app should be live at:
+# https://xamse.pythonanywhere.com
+# ============================================
+
